@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -17,22 +18,23 @@ use Psy\Readline\Hoa\_Protocol;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-
 Route::get('/', function () {
-    $allPosts=Post::all();
+    return redirect('/home');
+});
+
+Route::get('/login', [AuthController::class, 'showLoginForm']);
+Route::get('/register', [AuthController::class, 'showRegisterationForm']);
+
+
+Route::get('/home', function () {
+    $allPosts = Post::all();
     $userPosts = [];
     if (auth()->check()) {
         $userPosts = auth()->user()->usersPosts()->latest()->get();
     }
-    return view('home', ['userPosts' => $userPosts,'allPosts'=>$allPosts]);
+    return view('home', ['userPosts' => $userPosts, 'allPosts' => $allPosts]);
 });
 
-
-// Route::get('/', function () {
-//     $posts = Post::all();
-//     return view('home', ['posts' => $posts]);
-// });
 Route::post('register', [userController::class, 'register']);
 Route::post('logout', [userController::class, 'logout']);
 Route::post('login', [userController::class, 'login']);

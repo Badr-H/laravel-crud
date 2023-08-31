@@ -61,27 +61,19 @@
         </div>
     @else
         <div>
-            <h2>Register </h2>
-            <form action="/register" method="POST">
-                @csrf
-                <input type="text" name="name" id="" placeholder="name">
-                <input type="email" name="email" id="" placeholder="email">
-                <input type="password" name="password" id="" placeholder="password">
-                <button>Register</button>
-            </form>
+            <a href="/register">
+                <h1>Register</h1>
+            </a>
+
         </div>
 
 
 
         <div>
-            <h2>Login </h2>
-            <form action="/login" method="POST">
-                @csrf
-                <input type="text" name="loginName" id="" placeholder="name">
+            <a href="/login">
+                <h1>Login </h1>
+            </a>
 
-                <input type="password" name="loginPassword" id="" placeholder="password">
-                <button>Login</button>
-            </form>
         </div>
     @endauth
 
