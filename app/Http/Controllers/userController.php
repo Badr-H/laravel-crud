@@ -20,7 +20,7 @@ class userController extends Controller
         $incomingFields['password'] = bcrypt($incomingFields['password']);
         $user = User::create($incomingFields);
         auth()->login($user);
-        return redirect('/');
+        return redirect('/home');
     }
     public function logout()
     {
@@ -33,12 +33,18 @@ class userController extends Controller
             'loginName' => 'required',
             'loginPassword' => 'required',
         ]);
-        if (auth()->attempt([
-            'name' => $incomingFields['loginName'],
-            'password' => $incomingFields['loginPassword']
-        ])) {
+        if (
+            auth()->attempt([
+                'name' => $incomingFields['loginName'],
+                'password' => $incomingFields['loginPassword']
+            ])
+        ) {
             $request->session()->regenerate();
+            return redirect('/home');
         }
-        return redirect('/');
+        return back()->withInput()->withErrors(['loginName' => 'invalid login credentials.',]);
+        //Authentication failed, alert the user
+
+
     }
 }

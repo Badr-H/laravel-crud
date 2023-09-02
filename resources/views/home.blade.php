@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{{ asset('home.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/home.css') }}">
 
 </head>
 
@@ -60,21 +60,22 @@
             @endforeach
         </div>
     @else
-        <div>
+        <script>
+            window.location.href = '/login'
+        </script>
+        {{-- <div>
             <a href="/register">
                 <h1>Register</h1>
             </a>
 
         </div>
 
-
-
         <div>
             <a href="/login">
                 <h1>Login </h1>
             </a>
 
-        </div>
+        </div> --}}
     @endauth
 
 </body>
