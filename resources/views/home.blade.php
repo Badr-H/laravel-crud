@@ -4,53 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{{ asset('styles/home.css') }}">
-
+    @vite('resources/css/app.css')
 </head>
 
 <body>
 
+
     @auth
-        <h1>you are logged in as <span>{{ Auth::user()->name }}</span></h1>
-        <form action="/logout" method="POST">
-            @csrf
-            <button>
-                Logout
-            </button>
-        </form>
+        <header>
+            @if (session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+            @endif
+            <h1 class="font-bold underline">Welcome back <span>{{ Auth::user()->name }}</span>!</h1>
+        </header>
 
 
-
-        <div>
+        <div class="create-post">
             <h2>Create new post</h2>
-            <form action="/create-post" method="POST">
+            <form action="/create-post" method="POST" id="form">
                 @csrf
-                <input type="text" name="title" placeholder="Post title">
-                <textarea name="body" cols="30" rows="10" placeholder="body content... "></textarea>
-                <button>Save Post</button>
+                <input type="text" name="title" placeholder="Post title" id="title">
+                <textarea name="body" placeholder="body content... " id="body"></textarea>
+                <button id="save-btn">Save Post</button>
             </form>
         </div>
 
-        @if ($userPosts->isEmpty())
-            <div>
-                <h2>My Posts</h2>
-                <p>You dont have any posts yet</p>
-            </div>
-        @else
-            <div>
-                <h2>My Posts</h2>
-                @foreach ($userPosts as $post)
-                    <div>
-                        <h3>{{ $post->title }}</h3>
-                        {{-- {{ $post['body'] }} --}}
-                    </div>
-                @endforeach
-            </div>
-        @endif
+        <div class="my-posts">
+            @if ($userPosts->isEmpty())
+                <div>
+                    <h2>My Posts</h2>
+                    <p>You dont have any posts yet</p>
+                </div>
+            @else
+                <div>
+                    <h2>My Posts</h2>
+                    @foreach ($userPosts as $post)
+                        <div>
+                            <h3>{{ $post->title }}</h3>
+                            {{-- {{ $post['body'] }} --}}
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div>
 
 
-
-        <div>
+        <div class="all-posts">
             <h2>All Posts</h2>
             @foreach ($allPosts as $post)
                 <div>
@@ -59,6 +60,14 @@
                 </div>
             @endforeach
         </div>
+        <footer>
+            <form action="/logout" method="POST">
+                @csrf
+                <button>
+                    Logout
+                </button>
+            </form>
+        </footer>
     @else
         <script>
             window.location.href = '/login'

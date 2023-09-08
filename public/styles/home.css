@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Tektur&display=swap');
+
 * {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Tektur', cursive;
+
 }
 
 body {
@@ -9,12 +12,25 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    height: 100vh;
+
 }
 
+.create-post {
+
+    display: flex;
+    justify-content: space-between;
+    border: red solid;
+
+}
+
+#title {
+    flex: 2;
+}
+
+
+
 input,
-button,
-textarea {
+button {
     border: 2px solid black;
     background-color: #dadada;
     padding: 5px;
@@ -22,7 +38,8 @@ textarea {
 }
 
 textarea {
-    min-height: 50px;
+    height: 200px;
+    width: 400px;
     resize: vertical;
 }
 

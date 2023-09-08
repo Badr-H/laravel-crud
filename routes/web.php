@@ -19,7 +19,7 @@ use Psy\Readline\Hoa\_Protocol;
 |
 */
 Route::get('/', function () {
-    return redirect('/login');
+    return redirect('/home');
 });
 
 Route::get('/login', [AuthController::class, 'showLoginForm']);

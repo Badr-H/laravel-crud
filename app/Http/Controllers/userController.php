@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class userController extends Controller
 {
@@ -20,11 +23,15 @@ class userController extends Controller
         $incomingFields['password'] = bcrypt($incomingFields['password']);
         $user = User::create($incomingFields);
         auth()->login($user);
-        return redirect('/home');
+        if (auth()->check()) {
+            return redirect('/home')->with('message', "This is Success Message");
+        }
     }
-    public function logout()
+    public function logout(Request $request): RedirectResponse
     {
         auth()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect('/');
     }
     public function login(Request $request)
@@ -33,16 +40,20 @@ class userController extends Controller
             'loginName' => 'required',
             'loginPassword' => 'required',
         ]);
+        $remember = $request->has('remember') ? true : false;
         if (
-            auth()->attempt([
-                'name' => $incomingFields['loginName'],
-                'password' => $incomingFields['loginPassword']
-            ])
+            auth()->attempt(
+                [
+                    'name' => $incomingFields['loginName'],
+                    'password' => $incomingFields['loginPassword'],
+                ],
+                $remember
+            )
         ) {
             $request->session()->regenerate();
             return redirect('/home');
         }
-        return back()->withInput()->withErrors(['loginName' => 'invalid login credentials.',]);
+        return back()->withInput()->withErrors(['loginName' => 'invalid log in credentials.', 'loginPassword' => 'required']);
         //Authentication failed, alert the user
 
 

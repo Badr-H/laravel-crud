@@ -6,6 +6,12 @@
 </head>
 
 <body>
+
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            🛑 {{ $errors->first() }}
+        </div>
+    @endif
     <div class="card">
         <h1>Register</h1>
         <form action="/register" method="POST">

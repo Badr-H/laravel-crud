@@ -20,7 +20,8 @@ class postController extends Controller
             $incomingFields['body'] = strip_tags($incomingFields['body']);
             $incomingFields['user_id'] = auth()->id();
             Post::create($incomingFields);
-            return redirect('/');
-        }
+            return redirect('/home');
+        } else
+            return redirect('login');
     }
 }
