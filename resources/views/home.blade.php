@@ -17,17 +17,17 @@
                     {{ session()->get('message') }}
                 </div>
             @endif
-            <h1 class="font-bold underline">Welcome back <span>{{ Auth::user()->name }}</span>!</h1>
+            <h1 class="">Welcome back <span>{{ Auth::user()->name }}</span>!</h1>
         </header>
 
 
-        <div class="create-post">
+        <div class="">
             <h2>Create new post</h2>
             <form action="/create-post" method="POST" id="form">
                 @csrf
                 <input type="text" name="title" placeholder="Post title" id="title">
                 <textarea name="body" placeholder="body content... " id="body"></textarea>
-                <button id="save-btn">Save Post</button>
+                <button class="btn btn-dark " id="save-btn">Save Post</button>
             </form>
         </div>
 
@@ -38,7 +38,7 @@
                     <p>You dont have any posts yet</p>
                 </div>
             @else
-                <div>
+                <div class="">
                     <h2>My Posts</h2>
                     @foreach ($userPosts as $post)
                         <div>
